@@ -5,7 +5,6 @@ const elementById = (id) => {
 
 const handleSearch = () => {
   const keyword = elementById("keyword");
-  console.log(keyword.value)
   const url = `https://www.theaudiodb.com/api/v1/json/2/search.php?s=${keyword.value}`;
   fetch(url)
     .then((res) => res.json())
@@ -18,6 +17,9 @@ const handleSearch = () => {
 
 const showArtists = (data) => {
   const artistContainer = elementById("artists");
+  const albumContainer = elementById("albums");
+  albumContainer.innerHTML = '';
+  artistContainer.innerHTML = '';
   data?.artists?.forEach((artist) => {
     const div = document.createElement("div");
     div.classList.add("artist-card");
@@ -52,14 +54,16 @@ const fetchAlbums = (id) => {
 };
 
 const showAlbum = (data) => {
+  console.log(data.album);
   const albumContainer = elementById("albums");
-  album.forEach((item) => {
+  albumContainer.innerHTML = '';
+  data?.album?.forEach((album) => {
     const div = document.createElement("div");
     div.classList.add("album");
     div.innerHTML = `
         <div class="album-image-container">
           <img
-            src="${album.strAlbumThumb}"
+            src="${album?.strAlbumThumb === null ? 'https://us.123rf.com/450wm/infadel/infadel1712/infadel171200119/91684826-a-black-linear-photo-camera-logo-like-no-image-available-.jpg?ver=6' : album?.strAlbumThumb}"
             alt=""
           />
         </div>
